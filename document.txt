@@ -1,0 +1,77 @@
+相關資訊如下，cocos2d-x 2.1 之後就要使用 2010 build
+git上面的中文文件記得切換成 utf8 encoding
+
+執行檔和tile map編輯器
+https://www.dropbox.com/sh/4hpfd5iyd2mpozk/dmOcJ7k7CQ
+
+cocos2d-x-2.0.4
+https://code.google.com/p/cocos2d-x/downloads/list
+https://code.google.com/p/cocos2d-x/downloads/detail?name=cocos2d-2.0-x-2.0.4.zip&can=2&q=
+
+Compile and Build：
+1.download cocos2d-x-2.0.4，要先使用裡面的 VC2008 solution build lib 和 dll
+(build 好的dll和lib應該會在資料夾cocos2d-2.0-x-2.0.4\Debug.win32中)
+2.check out homedefence.sln
+3.check c++ include header 和 lib include header 是否正確
+4.執行前將工作目錄切換至 \homedefence\bin\debug (release)
+5.執行前將相關的dll copy至工作目錄
+
+------------------------------------------
+cocos2d-x參考範例
+------------------------------------------
+TMX Ortho Zorder
+TMX Ortho VertexZ
+TMX anchorPoint test
+TMX read/write test
+TMX tileSet test
+TMX resize test
+TMX ortho move layer
+TMX tile flip test
+TMX create from XML test
+Tile Map atlias
+
+------------------------------------------
+遊戲概念參考範例
+------------------------------------------
+Castle Doctrine、Spy v.s Spy
+
+------------------------------------------
+發想
+------------------------------------------
+a.主角在一個 N x N 方陣形式的迷宮，找到寶箱或是被怪物抓到結束遊戲。
+b.利用現成的編輯器(tile editor)做為Level editor，架構迷宮及測試玩法。
+c.初期先嘗試cocos2d建立從上而下的俯視遊玩方式。
+d.接著利用資料轉換的方式porting到ogre3d上嘗試建立從側面觀看的遊戲視點。
+e.手持平台上的操作方式就是slide、上/下/左/右。
+f.遊戲進行採回合置、每個可思考的單位以每n(>=1) frame能做一次決定的方式進行。
+g.過程中可以觀察iPhone與iPad的版面大小，討論是否能把iPhone做成尋寶遊戲、iPad則維持2d俯視做為一個防守遊戲。
+h.若想進行(g)嘗試、則tile editor所產生的xml為兩個平台的共用資料，兩個平台只有表現方式(render)的不同，
+  細部資料也需要做分析歸納。
+i.這個專案利用git溝通，在研究合理公開的狀況下，嘗試做open source(但是不包含關卡設計、media這些資料)分享。
+j.所以這個專案初期是以練習程式寫作，練習針對這個遊戲規畫資料切割、練習使用工具完成目的為主。
+
+------------------------------------------
+功能：
+------------------------------------------
+主角的移動 WASD
+可利用 tile-editor 編輯的地圖
+tile-property=collidable
+跟隨主角的enemy
+跟隨主角的camera
+keyboard操作
+讓地圖可循環
+
+******************************************
+主角跟enemy的操作改成排程的方式(rpg回合制)
+增加新的tile-property
+編輯主角的出生點
+編輯enemy的出生點
+編輯item的出生點
+實作一些item的效果
+
+------------------------------------------
+cocos2d-x在繪圖上的設計
+------------------------------------------
+只在初始化時設置 project_matrix
+node visit去設置 modelview_matrix stack
+所以camera是expensive call
